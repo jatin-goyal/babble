@@ -1,7 +1,7 @@
 import React from 'react';
 
-const smallLoadnng = () => {
-  return <div>smallLoadnng</div>;
+const SmallLoadnng = () => {
+  return <div>SmallLoadnng</div>;
 };
 
-export default smallLoadnng;
+export default SmallLoadnng;

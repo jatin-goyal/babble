@@ -1,7 +1,7 @@
 import React from 'react';
 
-const writeArticlles = () => {
+const WriteArticlles = () => {
   return <div>writeArticlles</div>;
 };
 
-export default writeArticlles;
+export default WriteArticlles;

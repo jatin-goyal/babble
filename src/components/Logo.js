@@ -19,7 +19,7 @@ export const Logo = props => {
       animation={animation}
       src={logoB}
       {...props}
-      style={{ borderRadius: '50%' }}
+      style={{ borderRadius: '50%', marginRight: '10px' }}
     />
   );
 };

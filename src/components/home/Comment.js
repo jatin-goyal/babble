@@ -1,7 +1,7 @@
 import React from 'react';
 
-const comment = () => {
+const Comment = () => {
   return <div>comment</div>;
 };
 
-export default comment;
+export default Comment;
