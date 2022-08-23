@@ -18,7 +18,7 @@ const Dashboard = () => {
       >
         <NavBar />
 
-        <Box px={['6', '20']}>
+        <Box px={['10', '24']}>
           <Box
             display="flex"
             justifyContent="space-between"
@@ -34,7 +34,7 @@ const Dashboard = () => {
               <Text fontSize={['4xl', '5xl']} mt={['6', null, 'none']}>
                 A place to write, read, and connect
               </Text>
-              <Text fontSize={['lg', '2xl']} mt="4" px="5">
+              <Text fontSize={['lg', '2xl']} mt="4" px="1">
                 Babble freely on any topic and connect with millions of readers.
               </Text>
 
@@ -51,7 +51,7 @@ const Dashboard = () => {
               </Button>
             </Box>
             <Box
-              px="8"
+              px={['0', '10']}
               display="flex"
               justifyContent="center"
               alignItems="center"
