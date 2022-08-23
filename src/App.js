@@ -4,9 +4,11 @@ import Dashboard from './components/home/Dashboard';
 
 function App() {
   return (
-    <Box textAlign="center" fontSize="xl">
-      <Dashboard />
-    </Box>
+    <>
+      <Box textAlign="center" fontSize="xl">
+        <Dashboard />
+      </Box>
+    </>
   );
 }
 

@@ -13,8 +13,10 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { FiGithub } from 'react-icons/fi';
+
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { FiGithub } from 'react-icons/fi';
+
 import { useNavigate } from 'react-router-dom';
 
 import { ColorModeSwitcher } from '../ColorModeSwitcher.js';
