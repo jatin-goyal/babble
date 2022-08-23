@@ -40,7 +40,13 @@ const NavBar = () => {
             Babble
           </Text>
           <Spacer />
-          <IconButton icon={<FiGithub />} variant="ghost" />
+          <IconButton
+            icon={<FiGithub />}
+            variant="ghost"
+            onClick={() =>
+              window.open('https://github.com/jatin-goyal/babble', '_blank')
+            }
+          />
           <ColorModeSwitcher />
 
           <Box>

@@ -12,9 +12,17 @@ const Footer = () => {
       mb="10"
       py={5}
     >
-      <IconButton icon={<FiGithub />} variant="ghost" />
+      <IconButton
+        icon={<FiGithub />}
+        variant="ghost"
+        onClick={() =>
+          window.open('https://github.com/jatin-goyal/babble', '_blank')
+        }
+      />
     </Box>
   );
 };
 
 export default Footer;
+
+// https://github.com/jatin-goyal/babble
