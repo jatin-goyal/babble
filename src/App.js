@@ -1,12 +1,11 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
-
-import NavBar from './components/layout/NavBar';
+import Dashboard from './components/home/Dashboard';
 
 function App() {
   return (
     <Box textAlign="center" fontSize="xl">
-      <NavBar />
+      <Dashboard />
     </Box>
   );
 }
