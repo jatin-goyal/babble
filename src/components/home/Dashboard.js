@@ -9,16 +9,16 @@ import second_pic from '../../assets/second_pic.png';
 
 const Dashboard = () => {
   return (
-    <Box d="flex" justifyContent="center" alignItems="center">
+    <Box display="flex" justifyContent="center" alignItems="center">
       <Box
-        w={['100vw', null, null, '100vw']}
+        w={['90vw', null, null, '100vw']}
         display="flex"
         justifyContent="center"
         flexDirection="column"
       >
         <NavBar />
 
-        <Box px={['10', '24']}>
+        <Box px={['10', '5', '0', '36']}>
           <Box
             display="flex"
             justifyContent="space-between"

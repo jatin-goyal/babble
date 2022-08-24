@@ -5,63 +5,27 @@ import {
   FormLabel,
   Input,
   Button,
-  useToast,
 } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../../context/AuthContext.js';
+import { Link } from 'react-router-dom';
+import { UserAuth } from '../../context/AuthContext';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import { Logo } from '../Logo';
 
-import { ColorModeSwitcher } from '../ColorModeSwitcher.js';
-import { Logo } from '../Logo.js';
-
-const Signup = () => {
+const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
-
   const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPasswordRef = useRef(null);
 
-  const { signup } = UserAuth();
+  const { resetPassword } = UserAuth();
 
-  const toast = useToast();
-  const navigate = useNavigate();
-
-  const handleSubmit = async e => {
+  const handlePasswordChange = async e => {
     e.preventDefault();
 
-    // setLoading(true);
-
-    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-      toast({
-        title: 'Passwords do not match',
-        status: 'error',
-        duration: 5000,
-      });
-      return;
-    }
-
     try {
-      setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-
-      toast({
-        title: 'Account successfully created',
-        status: 'success',
-        duration: 5000,
-      });
-
-      navigate('/');
+      await resetPassword(emailRef.current.value);
     } catch (err) {
-      console.log(err);
-
-      toast({
-        title: err.message,
-        status: 'error',
-        duration: 5000,
-      });
+      console.log(err.message);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -79,7 +43,6 @@ const Signup = () => {
           Babble
         </Text>
       </div>
-
       <Box
         w={['100%', null, null, '50%']}
         maxW="700px"
@@ -89,10 +52,11 @@ const Signup = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        flexDirection="column"
       >
         <Box w="80%" boxShadow="lg" px={6} py={8} rounded="lg">
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
-            Sign up
+            Forgot Password
           </Text>
           <FormControl id="email" mt={4} isRequired>
             <FormLabel>Email Address</FormLabel>
@@ -103,31 +67,30 @@ const Signup = () => {
               autoComplete="off"
             />
           </FormControl>
-          <FormControl id="password" mt={4} isRequired>
-            <FormLabel>Password</FormLabel>
-            <Input ref={passwordRef} type="password" variant="filled" />
-          </FormControl>
-          <FormControl id="confirmPassword" mt={4} isRequired>
-            <FormLabel>Confirm Password</FormLabel>
-            <Input ref={confirmPasswordRef} type="password" variant="filled" />
-          </FormControl>
+
           <Button
             w="100%"
             mt={4}
             py={6}
             colorScheme="red"
-            onClick={handleSubmit}
+            onClick={handlePasswordChange}
             isLoading={loading}
           >
-            Sign up now!
+            Reset password
           </Button>
-          <Text mt={8} fontWeight="normal" fontSize="lg">
-            Already have an account?{' '}
-            <Link to="/login" style={{ color: '#fd4f05' }}>
-              Login
-            </Link>
-          </Text>
         </Box>
+        <Text mt={8} fontWeight="normal" fontSize="lg">
+          Remember now ?{' '}
+          <Link to="/forgotpassword" style={{ color: '#028ddd' }}>
+            Login
+          </Link>
+        </Text>
+        <Text mt={4} fontWeight="normal" fontSize="lg">
+          Don't have an account?{' '}
+          <Link to="/signup" style={{ color: '#fd4f05' }}>
+            Sign up
+          </Link>
+        </Text>
       </Box>
 
       <Box
@@ -143,4 +106,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default ForgotPassword;
