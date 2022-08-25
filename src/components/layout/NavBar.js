@@ -13,7 +13,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FiGithub } from 'react-icons/fi';
@@ -56,7 +56,7 @@ const NavBar = () => {
 
   return (
     <>
-      <Box py="10" px={['6', '24']} w="100%" h={130}>
+      <Box py="10" px={['6', '12']} w="100%" h={130}>
         <Flex justify="center">
           <Logo h="12" pointerEvents="none" />
           <Text

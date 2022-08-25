@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Signup from './components/authentication/Signup';
 import Login from './components/authentication/Login';
-import ForgotPassword from './components/authentication/ForgotPassword';
 
 import Dashboard from './components/home/Dashboard';
 import WriteArticle from './components/home/WriteArticle';
@@ -12,43 +11,27 @@ import ViewArticle from './components/home/ViewArticle';
 import EditArticle from './components/home/EditArticle';
 
 import { UserAuth } from './context/AuthContext';
-import ProtectedRoute from './components/authentication/ProtectedRoute';
 
 function App() {
+  const { user } = UserAuth();
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/article/:articleID" element={<ViewArticle />} />
 
-        <Route
-          path="/write"
-          element={
-            <ProtectedRoute>
-              <WriteArticle />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/write" element={user ? <WriteArticle /> : <Login />} />
         <Route
           path="/my-articles"
-          element={
-            <ProtectedRoute>
-              <MyArticles />
-            </ProtectedRoute>
-          }
+          element={user ? <MyArticles /> : <Login />}
         />
         <Route
           path="/edit-article/:articleID"
-          element={
-            <ProtectedRoute>
-              <EditArticle />
-            </ProtectedRoute>
-          }
+          element={user ? <EditArticle /> : <Login />}
         />
 
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/forgotpassword" element={<ForgotPassword />} /> */}
+        <Route path="/signup" element={user ? <Dashboard /> : <Signup />} />
+        <Route path="/login" element={user ? <Dashboard /> : <Login />} />
       </Routes>
     </Router>
   );

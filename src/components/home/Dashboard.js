@@ -39,8 +39,8 @@ const Dashboard = () => {
               </Text>
 
               <Button
-                // as={Link}
-                // to="/write"
+                as={Link}
+                to="/write"
                 colorScheme="red"
                 w={'100%'}
                 py="8"

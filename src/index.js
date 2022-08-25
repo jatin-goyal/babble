@@ -3,6 +3,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import App from './App';
 import { AuthContextProvider } from './context/AuthContext';
+import { DbContextProvider } from './context/DbContext';
 import './input.css';
 
 const container = document.getElementById('root');
@@ -12,7 +13,9 @@ root.render(
   <ChakraProvider theme={theme}>
     <ColorModeScript />
     <AuthContextProvider>
-      <App />
+      <DbContextProvider>
+        <App />
+      </DbContextProvider>
     </AuthContextProvider>
   </ChakraProvider>
 );
