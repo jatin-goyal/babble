@@ -21,15 +21,28 @@ export const UseDatabase = () => useContext(DbContext);
 
 export const DbContextProvider = ({ children }) => {
   const { user } = UserAuth();
+  const [articlesList, setArticlesList] = useState([]);
 
   const articleCollectionRef = collection(db, 'articles');
 
   const publishArticle = data => addDoc(articleCollectionRef, data);
 
-  const getPublicArticles = () => {};
+  const getPublicArticles = async () => {
+    const q = query(
+      articleCollectionRef,
+      where('visibility', '==', 'public'),
+      orderBy('time', 'desc')
+    );
+    const data = await getDocs(q);
+    setArticlesList(data.docs.map(doc => ({ ...doc.data() })));
+
+    return articlesList;
+  };
 
   return (
-    <DbContext.Provider value={{ publishArticle }}>
+    <DbContext.Provider
+      value={{ publishArticle, getPublicArticles, articlesList }}
+    >
       {children}
     </DbContext.Provider>
   );

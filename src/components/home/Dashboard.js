@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Button, Divider, Image, Text } from '@chakra-ui/react';
 
 import NavBar from '../layout/NavBar';
@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../layout/Footer';
 import RecentArticles from './RecentArticles';
 import second_pic from '../../assets/second_pic.png';
+import { UseDatabase } from '../../context/DbContext';
 
 const Dashboard = () => {
   return (
@@ -62,8 +63,13 @@ const Dashboard = () => {
           </Box>
           <Divider my={['10', '16']} />
         </Box>
+        <Box my={['2', '0']}>
+          <Text fontSize={['2xl', '2xl']} px="1" textAlign="center" mb={'4'}>
+            Recent Articles
+          </Text>
+          <RecentArticles />
+        </Box>
 
-        <RecentArticles />
         <Footer />
       </Box>
     </Box>

@@ -20,7 +20,7 @@ const WriteArticle = () => {
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [content, setContent] = useState('');
-  const [visibility, setVisibility] = useState('Public');
+  const [visibility, setVisibility] = useState('public');
   const [loading, setLoading] = useState(false);
 
   const { user } = UserAuth();
@@ -39,6 +39,23 @@ const WriteArticle = () => {
       return;
     }
 
+    if (title.length > 100 || subtitle.length > 100) {
+      if (title.length > 100) {
+        toast({
+          title: 'Limit exceeded: Write title under 100 characters',
+          status: 'error',
+          timeout: 3000,
+        });
+      }
+      if (subtitle.length > 100) {
+        toast({
+          title: 'Limit exceeded: Write subtitle under 100 characters',
+          status: 'error',
+          timeout: 3000,
+        });
+      }
+      return;
+    }
     try {
       setLoading(true);
 
@@ -54,7 +71,7 @@ const WriteArticle = () => {
         autherName: user.email.split('@')[0],
         autherEmail: user.email,
         autherId: user.uid,
-        articleiId: uuidV4(),
+        articleId: uuidV4(),
       });
       toast({
         title: 'Article published',
