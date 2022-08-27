@@ -10,6 +10,7 @@ import {
   where,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 
 import { db } from '../firebase';
@@ -29,6 +30,17 @@ export const DbContextProvider = ({ children }) => {
   const articleCollectionRef = collection(db, 'articles');
 
   const publishArticle = data => addDoc(articleCollectionRef, data);
+
+  const deleteArticle = async id => {
+    const userArticle = doc(db, 'articles', id);
+    await deleteDoc(userArticle);
+    getUserArticles();
+  };
+
+  const updateArticle = async (id, data) => {
+    const docRef = doc(articleCollectionRef, id);
+    await updateDoc(docRef, data);
+  };
 
   const getPublicArticles = async () => {
     const q = query(
@@ -56,13 +68,6 @@ export const DbContextProvider = ({ children }) => {
     setUserArticles(data.docs.map(doc => ({ ...doc.data() })));
   };
 
-  const deleteArticle = async id => {
-    const userArticle = doc(db, 'articles', id);
-    await deleteDoc(userArticle);
-
-    getUserArticles();
-  };
-
   return (
     <DbContext.Provider
       value={{
@@ -76,6 +81,7 @@ export const DbContextProvider = ({ children }) => {
         showTags,
         setShowTags,
         deleteArticle,
+        updateArticle,
       }}
     >
       {children}

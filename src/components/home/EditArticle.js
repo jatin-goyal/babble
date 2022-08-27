@@ -14,10 +14,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { UserAuth } from '../../context/AuthContext';
 import { UseDatabase } from '../../context/DbContext';
 import NavBar from '../layout/NavBar';
-import { v4 as uuidV4 } from 'uuid';
 
 const EditArticle = () => {
-  const { getArticle, article, publishArticle } = UseDatabase();
+  const { getArticle, article, updateArticle } = UseDatabase();
   const { articleId } = useParams();
 
   const [title, setTitle] = useState('');
@@ -30,7 +29,7 @@ const EditArticle = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const handlePublish = async e => {
+  const handleUpdate = async id => {
     if (!title || !subtitle || !content) {
       toast({
         title: 'Fill all the fields',
@@ -61,25 +60,19 @@ const EditArticle = () => {
     try {
       setLoading(true);
 
-      // await publishArticle({
-      //   context: {
-      //     title,
-      //     subtitle,
-      //     content,
-      //   },
-      //   visibility,
-      //   time: Date.now(),
-      //   stars: 0,
-      //   autherName: user.email.split('@')[0],
-      //   autherEmail: user.email,
-      //   autherId: user.uid,
-      //   articleId: uuidV4(),
-      // });
-      // toast({
-      //   title: 'Article published',
-      //   status: 'success',
-      //   timeout: 3000,
-      // });
+      await updateArticle(id, {
+        context: {
+          title: title,
+          subtitle: subtitle,
+          content: content,
+        },
+        visibility: visibility,
+      });
+      toast({
+        title: 'Article published',
+        status: 'success',
+        timeout: 3000,
+      });
 
       // navigate('/');
     } catch (err) {
@@ -115,10 +108,10 @@ const EditArticle = () => {
         <NavBar />
         <Box px={['6', '10']}>
           <Text fontSize={['2xl', '3xl']} textAlign="center">
-            Write your article freely
+            Edit as much as you want
           </Text>
           <Text fontSize={['sm', 'md']} textAlign="center">
-            writing as {`@${user.email.split('@')[0]}`}
+            Editing as {`@${user.email.split('@')[0]}`}
           </Text>
           <Textarea
             variant="unstyled"
@@ -206,9 +199,10 @@ const EditArticle = () => {
               w={['100%', null, '50%']}
               colorScheme="red"
               isLoading={loading}
-              onClick={() => handlePublish()}
+              onClick={() => handleUpdate(article[0]?.articleId)}
             >
-              Publish {visibility === 'private' ? 'privately' : 'publicly'}
+              Update Article{' '}
+              {visibility === 'private' ? 'privately' : 'publicly'}
             </Button>
           </Box>
         </Box>
