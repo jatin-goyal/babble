@@ -18,7 +18,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/article/:articleID" element={<ViewArticle />} />
+        <Route path="/article/:articleId" element={<ViewArticle />} />
 
         <Route path="/write" element={user ? <WriteArticle /> : <Login />} />
         <Route
@@ -26,7 +26,7 @@ function App() {
           element={user ? <MyArticles /> : <Login />}
         />
         <Route
-          path="/edit-article/:articleID"
+          path="/edit-article/:articleId"
           element={user ? <EditArticle /> : <Login />}
         />
 
