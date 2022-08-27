@@ -15,7 +15,7 @@ import { UseDatabase } from '../../context/DbContext';
 
 const ArticleCard = ({ article }) => {
   const [scale, setScale] = useState(1.0);
-  const { showTags, deleteArticle } = UseDatabase();
+  const { showTags, deleteArticle, getArticle } = UseDatabase();
 
   let colorScheme = [
     '#E2E8F0',
@@ -124,9 +124,10 @@ const ArticleCard = ({ article }) => {
               as={Link}
               rightIcon={<EditIcon />}
               colorScheme="blue"
-              to={`/edit-article/${article?.articleID}`}
+              to={`/edit-article/${article?.articleId}`}
               onClick={e => {
                 e.stopPropagation();
+                getArticle(article?.articleId);
               }}
             >
               Edit
@@ -139,7 +140,7 @@ const ArticleCard = ({ article }) => {
               variant="outline"
               onClick={e => {
                 e.stopPropagation();
-                handleDelete(article?.articleID);
+                handleDelete(article?.articleId);
               }}
             >
               Delete

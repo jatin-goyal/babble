@@ -9,10 +9,10 @@ import Comments from './Comments';
 
 const ViewArticle = () => {
   const { getArticle, article } = UseDatabase();
-  const { articleID } = useParams();
+  const { articleId } = useParams();
 
   useEffect(() => {
-    getArticle(articleID);
+    getArticle(articleId);
   }, []);
 
   let date = new Date(article[0]?.time).toString();
