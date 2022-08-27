@@ -39,9 +39,8 @@ const ArticleCard = ({ article }) => {
   let randomColor = Math.floor(Math.random() * colorScheme.length);
   let date = new Date(article?.time).toString();
 
-  const handleDelete = (id, e) => {
-    e.stopPropagation();
-    deleteArticle(id);
+  const handleDelete = id => {
+    // deleteArticle(id);
   };
 
   return (
