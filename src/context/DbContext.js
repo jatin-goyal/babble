@@ -22,6 +22,9 @@ export const UseDatabase = () => useContext(DbContext);
 export const DbContextProvider = ({ children }) => {
   const { user } = UserAuth();
   const [articlesList, setArticlesList] = useState([]);
+  const [article, setArticle] = useState([]);
+  const [userArticles, setUserArticles] = useState([]);
+  const [showTags, setShowTags] = useState(false);
 
   const articleCollectionRef = collection(db, 'articles');
 
@@ -35,13 +38,45 @@ export const DbContextProvider = ({ children }) => {
     );
     const data = await getDocs(q);
     setArticlesList(data.docs.map(doc => ({ ...doc.data() })));
+  };
 
-    return articlesList;
+  const getArticle = async id => {
+    const q = query(articleCollectionRef, where('articleId', '==', id));
+    const data = await getDocs(q);
+    setArticle(data.docs.map(doc => ({ ...doc.data() })));
+  };
+
+  const getUserArticles = async () => {
+    const q = query(
+      articleCollectionRef,
+      where('autherEmail', '==', user.email),
+      orderBy('time', 'desc')
+    );
+    const data = await getDocs(q);
+    setUserArticles(data.docs.map(doc => ({ ...doc.data() })));
+  };
+
+  const deleteArticle = async id => {
+    const userArticle = doc(db, 'articles', id);
+    await deleteDoc(userArticle);
+
+    getUserArticles();
   };
 
   return (
     <DbContext.Provider
-      value={{ publishArticle, getPublicArticles, articlesList }}
+      value={{
+        publishArticle,
+        getPublicArticles,
+        articlesList,
+        getArticle,
+        article,
+        getUserArticles,
+        userArticles,
+        showTags,
+        setShowTags,
+        deleteArticle,
+      }}
     >
       {children}
     </DbContext.Provider>

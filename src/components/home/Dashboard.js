@@ -9,6 +9,8 @@ import second_pic from '../../assets/second_pic.png';
 import { UseDatabase } from '../../context/DbContext';
 
 const Dashboard = () => {
+  const { setShowTags } = UseDatabase();
+  setShowTags(false);
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <Box
