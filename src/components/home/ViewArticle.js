@@ -1,8 +1,10 @@
 import { StarIcon, LinkIcon } from '@chakra-ui/icons';
 import { Box, Button, Divider, HStack, Text } from '@chakra-ui/react';
+import { doc, getDoc, collection } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { UseDatabase } from '../../context/DbContext';
+import { db } from '../../firebase';
 
 import Navbar from '../layout/NavBar';
 import Comments from './Comments';
@@ -11,9 +13,27 @@ const ViewArticle = () => {
   const { getArticle, article } = UseDatabase();
   const { articleId } = useParams();
 
+  const postsCollectionRef = collection(db, 'articles');
+
   useEffect(() => {
     getArticle(articleId);
   }, []);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const docRef = doc(postsCollectionRef, articleId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log('Document data:', docSnap.data());
+        // setTitle(docSnap.data().title);
+        // setPostText(docSnap.data().postText);
+      } else {
+        console.log('No such document!');
+      }
+    };
+    getUserInfo();
+  }, [articleId, article]);
 
   let date = new Date(article[0]?.time).toString();
 

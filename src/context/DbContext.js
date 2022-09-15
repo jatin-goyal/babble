@@ -31,14 +31,14 @@ export const DbContextProvider = ({ children }) => {
 
   const publishArticle = data => addDoc(articleCollectionRef, data);
 
-  const deleteArticle = async id => {
-    const userArticle = doc(db, 'articles', id);
+  const deleteArticle = async articleId => {
+    const userArticle = doc(db, 'articles', articleId);
     await deleteDoc(userArticle);
     getUserArticles();
   };
 
-  const updateArticle = async (id, data) => {
-    const docRef = doc(articleCollectionRef, id);
+  const updateArticle = async (articleId, data) => {
+    const docRef = doc(articleCollectionRef, articleId);
     await updateDoc(docRef, data);
   };
 

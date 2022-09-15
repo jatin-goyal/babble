@@ -29,7 +29,7 @@ const EditArticle = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const handleUpdate = async id => {
+  const handleUpdate = async articleId => {
     if (!title || !subtitle || !content) {
       toast({
         title: 'Fill all the fields',
@@ -60,7 +60,7 @@ const EditArticle = () => {
     try {
       setLoading(true);
 
-      await updateArticle(id, {
+      await updateArticle(articleId, {
         context: {
           title: title,
           subtitle: subtitle,

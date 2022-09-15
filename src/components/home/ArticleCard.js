@@ -43,6 +43,8 @@ const ArticleCard = ({ article }) => {
     // deleteArticle(id);
   };
 
+  let content = article?.context.content;
+
   return (
     <Box
       minW={['82vw', '80vw', '42vw', '42vw', '30vw']}
@@ -93,9 +95,19 @@ const ArticleCard = ({ article }) => {
         <Text fontSize={['lg', 'xl']} opacity="0.8">
           {article?.context.subtitle}
         </Text>
+        <Divider mb={'2'} />
+        <Text
+          fontSize={['xsm', 'sm']}
+          opacity="1.0"
+          style={{ whiteSpace: 'pre-wrap' }}
+        >
+          {content.length > 150
+            ? content.slice(0, 100) + ' ' + '.... see more'
+            : content}
+        </Text>
       </Box>
       <Box>
-        <Divider my={'2'} />
+        <Divider mb={'2'} mt={'3'} />
         <HStack justifyContent={'space-between'} mb={3}>
           <Text fontSize={['sm']}>{`${date.slice(4, 15)}`}</Text>
           <HStack>
