@@ -17,7 +17,7 @@ import NavBar from '../layout/NavBar';
 
 const EditArticle = () => {
   const { getArticle, article, updateArticle } = UseDatabase();
-  const { articleId } = useParams();
+  const { documentId } = useParams();
 
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
@@ -60,7 +60,7 @@ const EditArticle = () => {
     try {
       setLoading(true);
 
-      await updateArticle(articleId, {
+      await updateArticle(documentId, {
         context: {
           title: title,
           subtitle: subtitle,
@@ -74,7 +74,7 @@ const EditArticle = () => {
         timeout: 3000,
       });
 
-      // navigate('/');
+      navigate('/');
     } catch (err) {
       console.log(err.message);
       toast({
@@ -87,14 +87,14 @@ const EditArticle = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getArticle(articleId);
+    getArticle(documentId);
   }, []);
 
   useEffect(() => {
-    setTitle(article[0]?.context.title);
-    setSubtitle(article[0]?.context.subtitle);
-    setContent(article[0]?.context.content);
-    setVisibility(article[0]?.visibility);
+    setTitle(article?.context?.title);
+    setSubtitle(article?.context?.subtitle);
+    setContent(article?.context?.content);
+    setVisibility(article?.visibility);
   }, [article]);
 
   return (
@@ -199,7 +199,7 @@ const EditArticle = () => {
               w={['100%', null, '50%']}
               colorScheme="red"
               isLoading={loading}
-              onClick={() => handleUpdate(article[0]?.articleId)}
+              onClick={() => handleUpdate(article?.documentId)}
             >
               Update Article{' '}
               {visibility === 'private' ? 'privately' : 'publicly'}

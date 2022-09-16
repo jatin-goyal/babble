@@ -139,10 +139,10 @@ const ArticleCard = ({ article }) => {
               as={Link}
               rightIcon={<EditIcon />}
               colorScheme="blue"
-              to={`/edit-article/${article?.articleId}`}
+              to={`/edit-article/${article?.documentId}`}
               onClick={e => {
                 e.stopPropagation();
-                getArticle(article?.articleId);
+                getArticle(article?.documentId);
               }}
             >
               Edit

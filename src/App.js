@@ -26,7 +26,7 @@ function App() {
           element={user ? <MyArticles /> : <Login />}
         />
         <Route
-          path="/edit-article/:articleId"
+          path="/edit-article/:documentId"
           element={user ? <EditArticle /> : <Login />}
         />
 

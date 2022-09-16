@@ -37,8 +37,8 @@ export const DbContextProvider = ({ children }) => {
     getUserArticles();
   };
 
-  const updateArticle = async (articleId, data) => {
-    const docRef = doc(articleCollectionRef, articleId);
+  const updateArticle = async (documentId, data) => {
+    const docRef = doc(articleCollectionRef, documentId);
     await updateDoc(docRef, data);
   };
 
