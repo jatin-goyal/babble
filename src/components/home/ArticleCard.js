@@ -40,7 +40,11 @@ const ArticleCard = ({ article }) => {
   let date = new Date(article?.time).toString();
 
   const handleDelete = id => {
-    // deleteArticle(id);
+    try {
+      deleteArticle(id);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   let content = article?.context.content;
@@ -151,7 +155,7 @@ const ArticleCard = ({ article }) => {
               variant="outline"
               onClick={e => {
                 e.stopPropagation();
-                handleDelete(article?.articleId);
+                handleDelete(article?.documentId);
               }}
             >
               Delete

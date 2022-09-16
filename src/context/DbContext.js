@@ -31,8 +31,8 @@ export const DbContextProvider = ({ children }) => {
 
   const publishArticle = data => addDoc(articleCollectionRef, data);
 
-  const deleteArticle = async articleId => {
-    const userArticle = doc(db, 'articles', articleId);
+  const deleteArticle = async documentId => {
+    const userArticle = doc(db, 'articles', documentId);
     await deleteDoc(userArticle);
     getUserArticles();
   };
