@@ -4,10 +4,8 @@ import {
   Button,
   Divider,
   HStack,
-  Spacer,
   Text,
   useToast,
-  VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { DeleteIcon, EditIcon, LockIcon, StarIcon } from '@chakra-ui/icons';

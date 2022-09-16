@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Button, Divider, Image, Text } from '@chakra-ui/react';
 
 import NavBar from '../layout/NavBar';

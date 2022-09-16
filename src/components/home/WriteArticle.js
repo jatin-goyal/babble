@@ -21,7 +21,6 @@ const WriteArticle = () => {
   const [subtitle, setSubtitle] = useState('');
   const [content, setContent] = useState('');
   const [visibility, setVisibility] = useState('public');
-  const [loading, setLoading] = useState(false);
 
   const { user } = UserAuth();
   const { publishArticle } = UseDatabase();
@@ -57,8 +56,6 @@ const WriteArticle = () => {
       return;
     }
     try {
-      setLoading(true);
-
       await publishArticle({
         context: {
           title,
@@ -88,8 +85,6 @@ const WriteArticle = () => {
         timeout: 3000,
       });
     }
-
-    setLoading(false);
   };
 
   return (
@@ -190,7 +185,6 @@ const WriteArticle = () => {
               py={8}
               w={['100%', null, '50%']}
               colorScheme="red"
-              isLoading={loading}
               onClick={() => handlePublish()}
             >
               Publish {visibility === 'private' ? 'privately' : 'publicly'}

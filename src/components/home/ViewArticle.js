@@ -1,10 +1,9 @@
 import { StarIcon, LinkIcon } from '@chakra-ui/icons';
 import { Box, Button, Divider, HStack, Text, useToast } from '@chakra-ui/react';
-import { doc, getDoc, collection } from 'firebase/firestore';
+
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { UseDatabase } from '../../context/DbContext';
-import { db } from '../../firebase';
 
 import Navbar from '../layout/NavBar';
 import Comments from './Comments';

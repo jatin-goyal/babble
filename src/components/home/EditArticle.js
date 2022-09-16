@@ -23,7 +23,6 @@ const EditArticle = () => {
   const [subtitle, setSubtitle] = useState('');
   const [content, setContent] = useState('');
   const [visibility, setVisibility] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const { user } = UserAuth();
   const toast = useToast();
@@ -58,8 +57,6 @@ const EditArticle = () => {
       return;
     }
     try {
-      setLoading(true);
-
       await updateArticle(documentId, {
         context: {
           title: title,
@@ -83,8 +80,6 @@ const EditArticle = () => {
         timeout: 3000,
       });
     }
-
-    setLoading(false);
   };
   useEffect(() => {
     getArticle(documentId);
@@ -115,8 +110,8 @@ const EditArticle = () => {
           </Text>
           <Textarea
             variant="unstyled"
-            // placeholder="Title"
-            value={article[0]?.context.title}
+            placeholder="Title"
+            value={title}
             fontSize={['4xl', '5xl']}
             mt="10"
             resize="vertical"
@@ -125,7 +120,7 @@ const EditArticle = () => {
           />
           <Textarea
             variant="unstyled"
-            // placeholder="Subtitle"
+            placeholder="Subtitle"
             value={subtitle}
             fontSize={['xl', '2xl']}
             resize="vertical"
@@ -134,7 +129,7 @@ const EditArticle = () => {
           />
           <Divider />
           <Textarea
-            // placeholder="Write your thoughts here"
+            placeholder="Write your thoughts here"
             value={content}
             variant="unstyled"
             fontSize={['md', 'lg']}
@@ -198,7 +193,6 @@ const EditArticle = () => {
               py={8}
               w={['100%', null, '50%']}
               colorScheme="red"
-              isLoading={loading}
               onClick={() => handleUpdate(article?.documentId)}
             >
               Update Article{' '}

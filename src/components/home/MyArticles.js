@@ -5,8 +5,7 @@ import MasonryLayout from '../layout/MasonryLayout';
 import NavBar from '../layout/NavBar';
 
 const MyArticles = () => {
-  const { userArticles, getUserArticles, showTags, setShowTags } =
-    UseDatabase();
+  const { userArticles, getUserArticles, setShowTags } = UseDatabase();
   const [status, setStatus] = useState('all');
   const [filteredArticles, setFilteredArticles] = useState();
 
