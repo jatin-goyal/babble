@@ -6,6 +6,7 @@ import {
   HStack,
   Spacer,
   Text,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
@@ -35,6 +36,7 @@ const ArticleCard = ({ article }) => {
   ];
 
   let navigate = useNavigate();
+  const toast = useToast();
 
   let randomColor = Math.floor(Math.random() * colorScheme.length);
   let date = new Date(article?.time).toString();
@@ -42,6 +44,7 @@ const ArticleCard = ({ article }) => {
   const handleDelete = id => {
     try {
       deleteArticle(id);
+      toast({ title: 'Article deleted', status: 'success', duration: 5000 });
     } catch (err) {
       console.log(err.message);
     }
