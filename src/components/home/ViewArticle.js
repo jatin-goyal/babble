@@ -1,5 +1,5 @@
 import { StarIcon, LinkIcon } from '@chakra-ui/icons';
-import { Box, Button, Divider, HStack, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, HStack, Text, useToast } from '@chakra-ui/react';
 import { doc, getDoc, collection } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -10,12 +10,35 @@ import Navbar from '../layout/NavBar';
 import Comments from './Comments';
 
 const ViewArticle = () => {
-  const { getArticle, article } = UseDatabase();
+  const { getArticle, article, updateArticle } = UseDatabase();
   const { documentId } = useParams();
 
   useEffect(() => {
     getArticle(documentId);
-  }, []);
+  }, [article]);
+
+  const toast = useToast();
+
+  const updateStar = async documentId => {
+    toast({
+      title: 'Glad you like it :)',
+      status: 'success',
+      duration: 3000,
+    });
+
+    await updateArticle(documentId, {
+      stars: article?.stars + 1,
+    });
+  };
+
+  const handleShareArticle = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({
+      title: 'Article link copied to clipboard',
+      status: 'success',
+      duration: 3000,
+    });
+  };
 
   let date = new Date(article?.time).toString();
 
@@ -72,10 +95,15 @@ const ViewArticle = () => {
               colorScheme="yellow"
               variant="solid"
               mr="2"
+              onClick={() => updateStar(documentId)}
             >
               Give a star
             </Button>
-            <Button rightIcon={<LinkIcon />} colorScheme="blue">
+            <Button
+              rightIcon={<LinkIcon />}
+              colorScheme="blue"
+              onClick={handleShareArticle}
+            >
               Share
             </Button>
           </HStack>
