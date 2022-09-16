@@ -23,7 +23,7 @@ export const UseDatabase = () => useContext(DbContext);
 export const DbContextProvider = ({ children }) => {
   const { user } = UserAuth();
   const [articlesList, setArticlesList] = useState([]);
-  const [article, setArticle] = useState([]);
+  const [article, setArticle] = useState({});
   const [userArticles, setUserArticles] = useState([]);
   const [showTags, setShowTags] = useState(false);
 
@@ -49,13 +49,22 @@ export const DbContextProvider = ({ children }) => {
       orderBy('time', 'desc')
     );
     const data = await getDocs(q);
-    setArticlesList(data.docs.map(doc => ({ ...doc.data() })));
+    setArticlesList(
+      data.docs.map(doc => ({ documentId: doc.id, ...doc.data() }))
+    );
   };
 
-  const getArticle = async id => {
-    const q = query(articleCollectionRef, where('articleId', '==', id));
-    const data = await getDocs(q);
-    setArticle(data.docs.map(doc => ({ ...doc.data() })));
+  const getArticle = documentId => {
+    const docRef = doc(articleCollectionRef, documentId);
+    getDoc(docRef)
+      .then(docSnap => {
+        if (docSnap.exists()) {
+          setArticle({ ...docSnap.data() });
+        } else {
+          console.log('No such document!');
+        }
+      })
+      .catch(err => console.log(err.message));
   };
 
   const getUserArticles = async () => {
@@ -65,7 +74,9 @@ export const DbContextProvider = ({ children }) => {
       orderBy('time', 'desc')
     );
     const data = await getDocs(q);
-    setUserArticles(data.docs.map(doc => ({ ...doc.data() })));
+    setUserArticles(
+      data.docs.map(doc => ({ documentId: doc.id, ...doc.data() }))
+    );
   };
 
   return (

@@ -67,7 +67,7 @@ const ArticleCard = ({ article }) => {
       transition={'all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s'}
       onMouseEnter={() => setScale(1.03)}
       onMouseLeave={() => setScale(1.0)}
-      onClick={() => navigate(`/article/${article?.articleId}`)}
+      onClick={() => navigate(`/article/${article.documentId}`)}
     >
       <Box textAlign={'start'} mb={4}>
         {showTags &&
@@ -102,7 +102,7 @@ const ArticleCard = ({ article }) => {
           style={{ whiteSpace: 'pre-wrap' }}
         >
           {content.length > 150
-            ? content.slice(0, 100) + ' ' + '.... see more'
+            ? content.slice(0, 150) + ' ' + '... See more'
             : content}
         </Text>
       </Box>

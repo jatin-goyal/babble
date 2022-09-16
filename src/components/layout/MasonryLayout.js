@@ -18,7 +18,7 @@ const MasonryLayout = ({ articlesList }) => {
       breakpointCols={breakPointObj}
     >
       {articlesList?.map(article => {
-        return <ArticleCard article={article} key={article.articleId} />;
+        return <ArticleCard article={article} key={article.documentId} />;
       })}
     </Masonry>
   );

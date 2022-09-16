@@ -18,7 +18,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/article/:articleId" element={<ViewArticle />} />
+        <Route path="/article/:documentId" element={<ViewArticle />} />
 
         <Route path="/write" element={user ? <WriteArticle /> : <Login />} />
         <Route

@@ -11,31 +11,13 @@ import Comments from './Comments';
 
 const ViewArticle = () => {
   const { getArticle, article } = UseDatabase();
-  const { articleId } = useParams();
-
-  const postsCollectionRef = collection(db, 'articles');
+  const { documentId } = useParams();
 
   useEffect(() => {
-    getArticle(articleId);
+    getArticle(documentId);
   }, []);
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const docRef = doc(postsCollectionRef, articleId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        console.log('Document data:', docSnap.data());
-        // setTitle(docSnap.data().title);
-        // setPostText(docSnap.data().postText);
-      } else {
-        console.log('No such document!');
-      }
-    };
-    getUserInfo();
-  }, [articleId, article]);
-
-  let date = new Date(article[0]?.time).toString();
+  let date = new Date(article?.time).toString();
 
   return (
     <Box
@@ -52,9 +34,9 @@ const ViewArticle = () => {
         flexDirection="column"
       >
         <Box px={['6', '10']} mt="2">
-          <Text fontSize={['4xl', '5xl']}>{article[0]?.context.title}</Text>
+          <Text fontSize={['4xl', '5xl']}>{article?.context?.title}</Text>
           <Text fontSize={['xl', '2xl']} opacity="0.8">
-            {article[0]?.context.subtitle}
+            {article?.context?.subtitle}
           </Text>
           <HStack mt="6" justifyContent={'space-between'}>
             <HStack>
@@ -62,7 +44,7 @@ const ViewArticle = () => {
                 color="blue.500"
                 fontSize={['lg', 'xl']}
                 mr="4"
-              >{`@${article[0]?.autherName}`}</Text>
+              >{`@${article?.autherName}`}</Text>
               <Text opacity="0.5" fontSize={['lg', 'xl']}>{`${date?.slice(
                 4,
                 15
@@ -74,14 +56,14 @@ const ViewArticle = () => {
                 color="yellow.500"
                 fontSize={['lg', 'xl']}
               >
-                {article[0]?.stars}
+                {article?.stars}
               </Text>
               <StarIcon color="yellow.500" fontSize={['lg', 'xl']} mx="2" />
             </HStack>
           </HStack>
           <Divider my="6" />
           <Text fontSize={['lg', 'xl']} style={{ whiteSpace: 'pre-wrap' }}>
-            {article[0]?.context.content}
+            {article?.context?.content}
           </Text>
           <Divider my="6" />
           <HStack>
