@@ -22,11 +22,15 @@ export const UseDatabase = () => useContext(DbContext);
 export const DbContextProvider = ({ children }) => {
   const { user } = UserAuth();
   const [articlesList, setArticlesList] = useState([]);
+  const [comments, setComments] = useState([]);
   const [article, setArticle] = useState({});
   const [userArticles, setUserArticles] = useState([]);
   const [showTags, setShowTags] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const articleCollectionRef = collection(db, 'articles');
+
+  const commentsCollectionRef = collection(db, 'comments');
 
   const publishArticle = data => addDoc(articleCollectionRef, data);
 
@@ -41,26 +45,37 @@ export const DbContextProvider = ({ children }) => {
     await updateDoc(docRef, data);
   };
 
-  const getPublicArticles = async () => {
+  const getPublicArticles = () => {
+    setLoading(true);
     const q = query(
       articleCollectionRef,
       where('visibility', '==', 'public'),
       orderBy('time', 'desc')
     );
-    const data = await getDocs(q);
-    setArticlesList(
-      data.docs.map(doc => ({ documentId: doc.id, ...doc.data() }))
-    );
+    getDocs(q)
+      .then(data => {
+        setArticlesList(
+          data.docs.map(doc => ({ documentId: doc.id, ...doc.data() }))
+        );
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err.message);
+        setLoading(false);
+      });
   };
 
   const getArticle = documentId => {
+    setLoading(true);
     const docRef = doc(articleCollectionRef, documentId);
     getDoc(docRef)
       .then(docSnap => {
         if (docSnap.exists()) {
           setArticle({ ...docSnap.data() });
+          setLoading(false);
         } else {
           console.log('No such document!');
+          setLoading(false);
         }
       })
       .catch(err => console.log(err.message));
@@ -78,6 +93,12 @@ export const DbContextProvider = ({ children }) => {
     );
   };
 
+  const postComment = async data => await addDoc(commentsCollectionRef, data);
+
+  const getComments = articleId => {
+    const q = query(commentsCollectionRef, where('articleId', '==', articleId));
+  };
+
   return (
     <DbContext.Provider
       value={{
@@ -92,6 +113,8 @@ export const DbContextProvider = ({ children }) => {
         setShowTags,
         deleteArticle,
         updateArticle,
+        loading,
+        setLoading,
       }}
     >
       {children}

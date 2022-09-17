@@ -5,7 +5,7 @@ import MasonryLayout from '../layout/MasonryLayout';
 import Loading from '../layout/Loading';
 
 const RecentArticles = () => {
-  const { getPublicArticles, articlesList } = UseDatabase();
+  const { getPublicArticles, articlesList, loading } = UseDatabase();
 
   useEffect(() => {
     try {
@@ -17,15 +17,19 @@ const RecentArticles = () => {
 
   return (
     <>
-      <Box
-        w={'100%'}
-        display="flex"
-        flexDirection={['column', 'row']}
-        flexWrap={['wrap']}
-        justifyContent={['center']}
-      >
-        <MasonryLayout articlesList={articlesList} />
-      </Box>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Box
+          w={'100%'}
+          display="flex"
+          flexDirection={['column', 'row']}
+          flexWrap={['wrap']}
+          justifyContent={['center']}
+        >
+          <MasonryLayout articlesList={articlesList} />
+        </Box>
+      )}
     </>
   );
 };
