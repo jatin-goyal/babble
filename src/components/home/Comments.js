@@ -48,9 +48,8 @@ const Comments = () => {
   };
 
   useEffect(() => {
-    setArticleComments([]);
     setArticleComments(
-      comments.filter(comment => comment.articleId == article.articleId)
+      comments.filter(comment => comment.articleId === article.articleId)
     );
     console.log(articleComments);
   }, []);
@@ -73,8 +72,8 @@ const Comments = () => {
       </Box>
 
       <Box>
-        {comments &&
-          comments.map(comment => (
+        {articleComments &&
+          articleComments.map(comment => (
             <Comment comment={comment} key={comment.commentId} />
           ))}
       </Box>

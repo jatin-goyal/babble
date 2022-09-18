@@ -100,7 +100,6 @@ export const DbContextProvider = ({ children }) => {
   const getComments = async () => {
     getDocs(commentsCollectionRef).then(data => {
       setComments(data.docs.map(doc => ({ commentId: doc.id, ...doc.data() })));
-      console.log(comments);
     });
   };
 
