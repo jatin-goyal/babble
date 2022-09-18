@@ -1,4 +1,11 @@
-import { Box, IconButton, Input, Text, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Divider,
+  IconButton,
+  Input,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { UseDatabase } from '../../context/DbContext';
@@ -55,7 +62,7 @@ const Comments = () => {
     <Box mt={12}>
       <Text fontSize={['2xl', '3xl']}>Comments</Text>
 
-      <Box display={'flex'} my={5}>
+      <Box display={'flex'} my={5} mb={6}>
         <Box display={'flex'} w={['90%', '100%']}>
           <Input
             variant="unstyled"
@@ -67,8 +74,8 @@ const Comments = () => {
           <IconButton icon={<AddIcon />} ml={2} onClick={handlePostComment} />
         </Box>
       </Box>
-
-      <Box>
+      <Divider mb={8} />
+      <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
         {articleComments &&
           articleComments.map(comment => (
             <Comment comment={comment} key={comment.commentId} />

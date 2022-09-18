@@ -102,6 +102,12 @@ export const DbContextProvider = ({ children }) => {
     });
   };
 
+  const deleteComment = async commentId => {
+    const userComment = doc(db, 'comments', commentId);
+    await deleteDoc(userComment);
+    getComments();
+  };
+
   return (
     <DbContext.Provider
       value={{
@@ -121,6 +127,7 @@ export const DbContextProvider = ({ children }) => {
         postComment,
         getComments,
         comments,
+        deleteComment,
       }}
     >
       {children}
