@@ -1,13 +1,16 @@
 import { Box, IconButton, Input, Text, useToast } from '@chakra-ui/react';
 import { StarIcon, AddIcon, DeleteIcon } from '@chakra-ui/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UseDatabase } from '../../context/DbContext';
 import { useNavigate } from 'react-router-dom';
 import Comment from './Comment';
+import { UserAuth } from '../../context/AuthContext';
 
 const Comments = () => {
-  const { article, postCommment, comments } = UseDatabase();
   const [comment, setComment] = useState('');
+  const [articleComments, setArticleComments] = useState([]);
+  const { article, postComment, comments, getComments } = UseDatabase();
+  const { user } = UserAuth();
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -19,8 +22,38 @@ const Comments = () => {
         status: 'error',
         duration: 5000,
       });
+
+      return;
     }
+
+    const data = {
+      articleId: article.articleId,
+      authorId: user.uid,
+      authorEmail: user.email,
+      authorUsername: user.email.split('@')[0],
+      comment: comment,
+      time: Date.now(),
+    };
+
+    await postComment(data);
+
+    setComment('');
+    getComments();
+
+    toast({
+      title: 'Comment posted',
+      status: 'success',
+      duration: 5000,
+    });
   };
+
+  useEffect(() => {
+    setArticleComments([]);
+    setArticleComments(
+      comments.filter(comment => comment.articleId == article.articleId)
+    );
+    console.log(articleComments);
+  }, []);
 
   return (
     <Box mt={12}>

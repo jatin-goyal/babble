@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useContext } from 'react';
 import {
   doc,
   addDoc,
@@ -29,8 +29,6 @@ export const DbContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const articleCollectionRef = collection(db, 'articles');
-
-  const commentsCollectionRef = collection(db, 'comments');
 
   const publishArticle = data => addDoc(articleCollectionRef, data);
 
@@ -73,6 +71,7 @@ export const DbContextProvider = ({ children }) => {
         if (docSnap.exists()) {
           setArticle({ documentId: documentId, ...docSnap.data() });
           setLoading(false);
+          getComments();
           console.log(article);
         } else {
           console.log('No such document!');
@@ -94,7 +93,16 @@ export const DbContextProvider = ({ children }) => {
     );
   };
 
+  const commentsCollectionRef = collection(db, 'comments');
+
   const postComment = async data => await addDoc(commentsCollectionRef, data);
+
+  const getComments = async () => {
+    getDocs(commentsCollectionRef).then(data => {
+      setComments(data.docs.map(doc => ({ commentId: doc.id, ...doc.data() })));
+      console.log(comments);
+    });
+  };
 
   return (
     <DbContext.Provider
@@ -113,7 +121,7 @@ export const DbContextProvider = ({ children }) => {
         loading,
         setLoading,
         postComment,
-
+        getComments,
         comments,
       }}
     >

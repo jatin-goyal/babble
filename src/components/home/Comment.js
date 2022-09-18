@@ -8,7 +8,7 @@ const Comment = ({ comment }) => {
     <Box>
       <Box>
         <Text>{comment?.authorUsername}</Text>
-        <Text></Text>
+        <Text>{comment?.comment}</Text>
         <IconButton icon={DeleteIcon} onClick={deleteComment} />
       </Box>
     </Box>

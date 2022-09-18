@@ -10,11 +10,13 @@ import Comments from './Comments';
 import Loading from '../layout/Loading';
 
 const ViewArticle = () => {
-  const { getArticle, article, updateArticle, loading } = UseDatabase();
+  const { getArticle, article, updateArticle, loading, getComments } =
+    UseDatabase();
   const { documentId } = useParams();
 
   useEffect(() => {
     getArticle(documentId);
+    getComments();
   }, []);
 
   const toast = useToast();
