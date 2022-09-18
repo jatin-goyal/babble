@@ -97,7 +97,9 @@ export const DbContextProvider = ({ children }) => {
   const postComment = async data => await addDoc(commentsCollectionRef, data);
 
   const getComments = async () => {
-    getDocs(commentsCollectionRef).then(data => {
+    const q = query(commentsCollectionRef, orderBy('time', 'desc'));
+
+    getDocs(q).then(data => {
       setComments(data.docs.map(doc => ({ commentId: doc.id, ...doc.data() })));
     });
   };
