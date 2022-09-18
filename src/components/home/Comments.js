@@ -49,7 +49,7 @@ const Comments = () => {
     setArticleComments(
       comments.filter(comment => comment.articleId === article.articleId)
     );
-  }, []);
+  }, [article, comments]);
 
   return (
     <Box mt={12}>
