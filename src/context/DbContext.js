@@ -71,8 +71,9 @@ export const DbContextProvider = ({ children }) => {
     getDoc(docRef)
       .then(docSnap => {
         if (docSnap.exists()) {
-          setArticle({ ...docSnap.data() });
+          setArticle({ documentId: documentId, ...docSnap.data() });
           setLoading(false);
+          console.log(article);
         } else {
           console.log('No such document!');
           setLoading(false);
@@ -95,8 +96,14 @@ export const DbContextProvider = ({ children }) => {
 
   const postComment = async data => await addDoc(commentsCollectionRef, data);
 
-  const getComments = articleId => {
-    const q = query(commentsCollectionRef, where('articleId', '==', articleId));
+  const getComments = async articleId => {
+    const q = query(
+      commentsCollectionRef,
+      where('articleId', '==', articleId),
+      orderBy('time', 'desc')
+    );
+    const data = await getDocs(q);
+    setComments(data.docs.map(doc => ({ commentId: doc.id, ...doc.data() })));
   };
 
   return (
@@ -115,6 +122,9 @@ export const DbContextProvider = ({ children }) => {
         updateArticle,
         loading,
         setLoading,
+        postComment,
+        getComments,
+        comments,
       }}
     >
       {children}
