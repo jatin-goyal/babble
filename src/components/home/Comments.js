@@ -3,9 +3,10 @@ import { StarIcon, AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import { UseDatabase } from '../../context/DbContext';
 import { useNavigate } from 'react-router-dom';
+import Comment from './Comment';
 
 const Comments = () => {
-  const { article } = UseDatabase();
+  const { article, postCommment, comments } = UseDatabase();
   const [comment, setComment] = useState('');
 
   const navigate = useNavigate();
@@ -36,6 +37,13 @@ const Comments = () => {
           />
           <IconButton icon={<AddIcon />} ml={2} onClick={handlePostComment} />
         </Box>
+      </Box>
+
+      <Box>
+        {comments &&
+          comments.map(comment => (
+            <Comment comment={comment} key={comment.commentId} />
+          ))}
       </Box>
     </Box>
   );

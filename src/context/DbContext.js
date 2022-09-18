@@ -96,16 +96,6 @@ export const DbContextProvider = ({ children }) => {
 
   const postComment = async data => await addDoc(commentsCollectionRef, data);
 
-  const getComments = async articleId => {
-    const q = query(
-      commentsCollectionRef,
-      where('articleId', '==', articleId),
-      orderBy('time', 'desc')
-    );
-    const data = await getDocs(q);
-    setComments(data.docs.map(doc => ({ commentId: doc.id, ...doc.data() })));
-  };
-
   return (
     <DbContext.Provider
       value={{
@@ -123,7 +113,7 @@ export const DbContextProvider = ({ children }) => {
         loading,
         setLoading,
         postComment,
-        getComments,
+
         comments,
       }}
     >
