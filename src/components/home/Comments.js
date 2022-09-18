@@ -1,8 +1,7 @@
 import { Box, IconButton, Input, Text, useToast } from '@chakra-ui/react';
-import { StarIcon, AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import { AddIcon } from '@chakra-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { UseDatabase } from '../../context/DbContext';
-import { useNavigate } from 'react-router-dom';
 import Comment from './Comment';
 import { UserAuth } from '../../context/AuthContext';
 
@@ -12,7 +11,6 @@ const Comments = () => {
   const { article, postComment, comments, getComments } = UseDatabase();
   const { user } = UserAuth();
 
-  const navigate = useNavigate();
   const toast = useToast();
 
   const handlePostComment = async () => {
@@ -51,7 +49,6 @@ const Comments = () => {
     setArticleComments(
       comments.filter(comment => comment.articleId === article.articleId)
     );
-    console.log(articleComments);
   }, []);
 
   return (

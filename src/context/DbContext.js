@@ -72,7 +72,6 @@ export const DbContextProvider = ({ children }) => {
           setArticle({ documentId: documentId, ...docSnap.data() });
           setLoading(false);
           getComments();
-          console.log(article);
         } else {
           console.log('No such document!');
           setLoading(false);
