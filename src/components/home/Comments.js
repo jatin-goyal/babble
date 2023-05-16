@@ -11,35 +11,47 @@ import React, { useEffect, useState } from 'react';
 import { UseDatabase } from '../../context/DbContext';
 import Comment from './Comment';
 import { UserAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Comments = () => {
   const [comment, setComment] = useState('');
   const [articleComments, setArticleComments] = useState([]);
   const { article, postComment, comments, getComments } = UseDatabase();
   const { user } = UserAuth();
+  const navigate = useNavigate();
 
   const toast = useToast();
 
   const handlePostComment = async () => {
+    const data = {
+      articleId: article.articleId,
+      authorId: user?.uid,
+      authorEmail: user?.email,
+      authorUsername: user?.email.split('@')[0],
+      comment: comment,
+      time: Date.now(),
+    };
     if (!comment) {
       toast({
         title: "Can't post empty comment",
         status: 'error',
-        duration: 5000,
+        duration: 3000,
       });
 
       return;
     }
 
-    const data = {
-      articleId: article.articleId,
-      authorId: user.uid,
-      authorEmail: user.email,
-      authorUsername: user.email.split('@')[0],
-      comment: comment,
-      time: Date.now(),
-    };
+    if (user?.uid === undefined || user?.uid === null) {
+      toast({
+        title: 'Sign In First',
+        status: 'error',
+        duration: 5000,
+      });
 
+      navigate('/signup');
+
+      return;
+    }
     await postComment(data);
 
     setComment('');
