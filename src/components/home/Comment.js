@@ -34,7 +34,7 @@ const Comment = ({ comment }) => {
         <Text mr={2} color={'blue.300'}>{`@${comment?.authorUsername}`}</Text>
         <Text>{date}</Text>
         <Spacer />
-        {user.uid === comment.authorId && (
+        {user?.uid === comment?.authorId && (
           <IconButton onClick={handleDeleteComment}>
             <DeleteIcon color={'red.300'} />
           </IconButton>
